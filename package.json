@@ -1,0 +1,34 @@
+{
+  "dependencies": {
+    "@create-figma-plugin/ui": "3.2.1",
+    "@create-figma-plugin/utilities": "3.2.1",
+    "preact": "10.25.0"
+  },
+  "devDependencies": {
+    "@create-figma-plugin/build": "3.2.1",
+    "@create-figma-plugin/tsconfig": "3.2.1",
+    "@figma/plugin-typings": "1.103.0",
+    "typescript": "5.7.2"
+  },
+  "scripts": {
+    "build": "build-figma-plugin --typecheck --minify",
+    "watch": "build-figma-plugin --typecheck --watch"
+  },
+  "figma-plugin": {
+    "editorType": [
+      "dev"
+    ],
+    "capabilities": [
+      "inspect"
+    ],
+    "id": "@togana/figma-plugin-export-variables",
+    "name": "Export Variables",
+    "main": "src/main.ts",
+    "ui": "src/ui.tsx",
+    "networkAccess": {
+      "allowedDomains": [
+        "none"
+      ]
+    }
+  }
+}
