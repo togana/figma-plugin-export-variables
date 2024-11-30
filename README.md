@@ -1,4 +1,4 @@
-# React Editor
+# figma-plugin-export-variables
 
 ## Development guide
 
