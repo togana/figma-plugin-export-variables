@@ -7,6 +7,7 @@
     "preact": "10.25.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@create-figma-plugin/build": "3.2.1",
     "@create-figma-plugin/tsconfig": "3.2.1",
     "@figma/plugin-typings": "1.103.0",
@@ -14,7 +15,9 @@
   },
   "scripts": {
     "build": "build-figma-plugin --typecheck --minify",
-    "watch": "build-figma-plugin --typecheck --watch"
+    "watch": "build-figma-plugin --typecheck --watch",
+    "check": "biome check --write .",
+    "ci": "biome ci ."
   },
   "figma-plugin": {
     "editorType": [
