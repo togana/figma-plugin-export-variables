@@ -1,10 +1,15 @@
-import { on, showUI } from '@create-figma-plugin/utilities'
-
-import { ExportButtonHandler } from './types'
+import { showUI } from '@create-figma-plugin/utilities'
+import { uniqueKeyIdMaps } from './libs/unique-key-id-maps';
+import { convertCollectionAsJSON } from './libs/convert-collection-as-json';
 
 export default function () {
-  on<ExportButtonHandler>('ON_CLICK', async function (text: string) {
-    console.log(text);
+  const variableCollections = figma.variables.getLocalVariableCollections();
+  const { idToKey } = uniqueKeyIdMaps(variableCollections, "id");  
+  const collections = variableCollections.map(collection => {
+    return {
+      [idToKey[collection.id]]: convertCollectionAsJSON(idToKey, collection) 
+    }
   })
-  showUI({ height: 240, width: 320 })
+
+  showUI({ height: 240, width: 320 }, { collections })
 }

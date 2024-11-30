@@ -2,17 +2,24 @@ import {
   Button,
   Container,
   render,
+  TextboxMultiline,
   VerticalSpace
 } from '@create-figma-plugin/ui'
-import { emit } from '@create-figma-plugin/utilities'
 import { h } from 'preact'
 import { useCallback } from 'preact/hooks'
-import { ExportButtonHandler } from './types'
+import copy from 'copy-to-clipboard';
+import { DTCGCollection } from './types';
 
-function Plugin() {
-  const handleInsertCodeButtonClick = useCallback(
+function Plugin({collections}: {collections: DTCGCollection}) {
+  const text = JSON.stringify(collections, null, 2)
+
+  const handleClipboardWriteText = useCallback(
     function () {
-      emit<ExportButtonHandler>('ON_CLICK', "text")
+      try {
+        copy(text);
+      } catch (error) {
+        console.error(error);
+      }
     },
     []
   )
@@ -20,12 +27,17 @@ function Plugin() {
   return (
     <Container space="medium">
       <VerticalSpace space="small" />
-      <div>
-        テキスト
-      </div>
+      <TextboxMultiline
+        // @ts-ignore props に readOnly がないが設定できる
+        // useRef と useEffect で設定することもできるが、読みにくいのでやめた
+        readOnly
+        rows={10}
+        variant={"border"}
+        value={text}
+      />
       <VerticalSpace space="large" />
-      <Button fullWidth onClick={handleInsertCodeButtonClick}>
-        export
+      <Button fullWidth onClick={handleClipboardWriteText}>
+        コピー
       </Button>
       <VerticalSpace space="small" />
     </Container>
