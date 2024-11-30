@@ -1,31 +1,28 @@
 import {
   Button,
   Container,
-  render,
   TextboxMultiline,
-  VerticalSpace
-} from '@create-figma-plugin/ui'
-import { h } from 'preact'
-import { useCallback } from 'preact/hooks'
-import copy from 'copy-to-clipboard';
-import { CopyEventHandler, DTCGCollection } from './types';
+  VerticalSpace,
+  render,
+} from '@create-figma-plugin/ui';
 import { emit } from '@create-figma-plugin/utilities';
+import copy from 'copy-to-clipboard';
+import { h } from 'preact';
+import { useCallback } from 'preact/hooks';
+import type { CopyEventHandler, DTCGCollection } from './types';
 
-function Plugin({collections}: {collections: DTCGCollection}) {
-  const text = JSON.stringify(collections, null, 2)
+function Plugin({ collections }: { collections: DTCGCollection }) {
+  const text = JSON.stringify(collections, null, 2);
 
-  const handleClipboardWriteText = useCallback(
-    function () {
-      try {
-        copy(text);
-        emit<CopyEventHandler>("COPY_TO_CLIPBOARD", "success");
-      } catch (error) {
-        console.error(error);
-        emit<CopyEventHandler>("COPY_TO_CLIPBOARD", "error");
-      }
-    },
-    []
-  )
+  const handleClipboardWriteText = useCallback(() => {
+    try {
+      copy(text);
+      emit<CopyEventHandler>('COPY_TO_CLIPBOARD', 'success');
+    } catch (error) {
+      console.error(error);
+      emit<CopyEventHandler>('COPY_TO_CLIPBOARD', 'error');
+    }
+  }, [text]);
 
   return (
     <Container space="medium">
@@ -35,7 +32,7 @@ function Plugin({collections}: {collections: DTCGCollection}) {
         // useRef と useEffect で設定することもできるが、読みにくいのでやめた
         readOnly
         rows={10}
-        variant={"border"}
+        variant={'border'}
         value={text}
       />
       <VerticalSpace space="large" />
@@ -44,7 +41,7 @@ function Plugin({collections}: {collections: DTCGCollection}) {
       </Button>
       <VerticalSpace space="small" />
     </Container>
-  )
+  );
 }
 
-export default render(Plugin)
+export default render(Plugin);
