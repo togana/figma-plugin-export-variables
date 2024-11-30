@@ -8,7 +8,8 @@ import {
 import { h } from 'preact'
 import { useCallback } from 'preact/hooks'
 import copy from 'copy-to-clipboard';
-import { DTCGCollection } from './types';
+import { CopyEventHandler, DTCGCollection } from './types';
+import { emit } from '@create-figma-plugin/utilities';
 
 function Plugin({collections}: {collections: DTCGCollection}) {
   const text = JSON.stringify(collections, null, 2)
@@ -17,8 +18,10 @@ function Plugin({collections}: {collections: DTCGCollection}) {
     function () {
       try {
         copy(text);
+        emit<CopyEventHandler>("COPY_TO_CLIPBOARD", "success");
       } catch (error) {
         console.error(error);
+        emit<CopyEventHandler>("COPY_TO_CLIPBOARD", "error");
       }
     },
     []

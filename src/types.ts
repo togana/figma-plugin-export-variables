@@ -1,3 +1,5 @@
+import { EventHandler } from '@create-figma-plugin/utilities'
+
 export type Extensions = {
   [namespace: string]: {
     figmaId?: string;
@@ -18,4 +20,9 @@ export type DTCGVariable = {
 export type DTCGCollection = {
   [key: string]: DTCGVariable | string | number | boolean | undefined | Extensions;
   $extensions?: Extensions;
+}
+
+export interface CopyEventHandler extends EventHandler {
+  name: "COPY_TO_CLIPBOARD";
+  handler: (type: 'success' | 'error') => void
 }
